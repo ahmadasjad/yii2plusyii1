@@ -1,7 +1,7 @@
 <?php
 
 
-namespace application\components;
+namespace ahmadasjad\yii2PlusYii1;
 
 use CException;
 use CWidget;
