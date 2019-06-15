@@ -1,0 +1,19 @@
+{
+    "name": "ahmadasjad/yii2plusyii1",
+    "description": "A library to use yii1 and Yii2 together",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Ahmad Asjad",
+            "email": "ahmadcimage@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ahmadasjad\\yii2PlusYii1\\": "src/"
+        }
+    }
+}
