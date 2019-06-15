@@ -4,6 +4,9 @@
 namespace ahmadasjad\yii2PlusYii1;
 
 use CActiveDataProvider as BaseDataProvider;
+use ahmadasjad\yii2PlusYii1\CSort;
+use ahmadasjad\yii2PlusYii1\CPagination;
+use yii\helpers\ArrayHelper;
 
 /**
  * Description of CActiveDataProvider
@@ -12,9 +15,9 @@ use CActiveDataProvider as BaseDataProvider;
  */
 class CActiveDataProvider extends BaseDataProvider {
     public function __construct($modelClass, $config = array()) {
-        $config = \yii\helpers\ArrayHelper::merge($config, [
-            'sort' => ['class' => CustomSort::class],
-            'pagination' => ['class' => CustomPagination::class],
+        $config = ArrayHelper::merge($config, [
+            'sort' => ['class' => CSort::class],
+            'pagination' => ['class' => CPagination::class],
         ]);
         parent::__construct($modelClass, $config);
         
