@@ -198,10 +198,21 @@ class View  extends \yii\web\View
     public function findViewFile($view, $context = null): string {
         $file = parent::findViewFile($view, $context);
         if(!file_exists($file)){
+            $altFile = $this->findViewFileWithCamelCase($view, $context = null);
+            if (file_exists($altFile)){
+                $file = $altFile;
+            }
+        }
+        return $file;
+    }
+
+    private function findViewFileWithCamelCase($view, $context = null): string {
+        if (strncmp($view, '/', 1) !== 0) {
             $controllerId = Yii::$app->controller->id;
             $view = '/' . $this->dashToCamel($controllerId) . '/' . $view;
-            $file = parent::findViewFile($view, $context);
         }
+
+        $file = parent::findViewFile($view, $context);
         return $file;
     }
 
