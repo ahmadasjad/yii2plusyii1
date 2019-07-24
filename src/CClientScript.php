@@ -16,14 +16,16 @@ class CClientScript extends BaseCClientScript {
     {
         parent::registerScript($id, $script, $position, $htmlOptions);
         Yii::$app->getView()->registerJs($script);
+        return $this;
     }
 
     public function registerScriptFile($url,$position=null,array $htmlOptions=array())
     {
         parent::registerScriptFile($url, $position, $htmlOptions);
         Yii::$app->getView()->registerJsFile($url);
+        return $this;
     }
-    
+
     public function registerCoreScript($name)
     {
         parent::registerCoreScript($name);
