@@ -42,4 +42,10 @@ class CClientScript extends BaseCClientScript {
 
         return $this;
     }
+
+    public function registerCssFile($url, $options = [], $key = null)
+    {
+        Yii::$app->getView()->registerCssFile($url, $options = [], $key = null);
+    }
+
 }
