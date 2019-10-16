@@ -2,6 +2,8 @@
 
 namespace ahmadasjad\yii2PlusYii1;
 
+use Yii;
+
 class Controller extends \yii\web\Controller
 {
 
