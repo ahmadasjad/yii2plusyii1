@@ -108,8 +108,20 @@ trait ControllerCompatibility
 //            else
 //                throw new CHttpException(403,$filter->resolveErrorMessage($rule));
 //        }
-        $filter->setRules($this->accessRules());
+        $accessRules = $this->accessRules();
+        foreach ($accessRules as &$accessRule){
+            if (!isset($accessRule['actions']))
+                continue;
+            foreach ($accessRule['actions'] as &$action){
+                $action = $this->camel2dashed($action);
+            }
+        }
+        $filter->setRules($accessRules);
         $filter->filter($filterChain);
+    }
+
+    private function camel2dashed($string) {
+        return strtolower(preg_replace('/([a-zA-Z])(?=[A-Z])/', '$1-', $string));
     }
 
     /**
