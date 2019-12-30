@@ -131,4 +131,23 @@ trait ControllerCompatibility
         return [];
     }
 
+    /**
+     * This is useful when any controller have `$this->pageTitle = '';` according to Yii1 version
+     * @param $title
+     */
+    public function setPageTitle($title)
+    {
+        Yii::$app->getView()->title = $title;
+    }
+
+    /**
+     * To make old version code compatible with new version
+     * For example: if somewhere it used like `echo $this->pageTitle`
+     * @return mixed|string
+     */
+    public function getPageTitle()
+    {
+        return Yii::$app->getView()->title;
+    }
+
 }
