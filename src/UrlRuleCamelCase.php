@@ -16,7 +16,27 @@ class UrlRuleCamelCase extends UrlRule
     {
         $matches = parent::substitutePlaceholderNames($matches);
         foreach ($matches as $key=>$val){
+            if ($key == 'rest'){
+                continue;
+            }
             $matches[$key] = $this->camel2dashed($val);
+        }
+
+        //Convert remaining URL part to GET & REQUEST
+        if (isset($matches['rest'])){
+            $rest = ltrim($matches['rest'], '/');
+            $rest = explode('/', $rest);
+            for($i=0;$i<count($rest);$i+=2){
+                if(!isset($rest[$i+1])){
+                    continue;
+                }
+                if(!isset($_GET[$rest[$i]])){
+                    $_GET[$rest[$i]] = $rest[$i+1];
+                }
+                if(!isset($_REQUEST[$rest[$i]])){
+                    $_REQUEST[$rest[$i]] = $rest[$i+1];
+                }
+            }
         }
 
         return $matches;
