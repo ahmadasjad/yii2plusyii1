@@ -206,6 +206,13 @@ class View  extends \yii\web\View
         return $file;
     }
 
+    public function getViewFile($view = null){
+        if(empty($view)){
+            return parent::getViewFile();
+        }
+        return $this->findViewFile($view);
+    }
+
     private function findViewFileWithCamelCase($view, $context = null): string {
         if (strncmp($view, '/', 1) !== 0) {
             $controllerId = Yii::$app->controller->id;
