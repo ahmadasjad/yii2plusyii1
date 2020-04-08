@@ -59,7 +59,7 @@ class FilterChain extends \CFilterChain
     }
 
     /**
-     * @throws \CException
+     * @throws CException
      */
     public function run()
     {

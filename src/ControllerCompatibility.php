@@ -48,14 +48,14 @@ trait ControllerCompatibility
 //        } else {
 //            $this->denyAccess($user);
 //        }
-        if (empty($this->behaviors())){
+        if (empty($this->behaviors())) {
             $filters = [];
-            if (method_exists($this, 'filters')){
+            if (method_exists($this, 'filters')) {
                 $filters = $this->filters();
             }
-            if(!empty($filters)){
+            if (!empty($filters)) {
                 $action->attachBehavior('Yii2Yii1Compatibility', new CompatibilityBehavior());
-                FilterChain::create($this,$action,$filters)->run();
+                FilterChain::create($this, $action, $filters)->run();
             }
         }
         return true;
@@ -69,10 +69,9 @@ trait ControllerCompatibility
      */
     public function filterPostOnly($filterChain)
     {
-        if(Yii::app()->getRequest()->getIsPostRequest())
+        if (Yii::app()->getRequest()->getIsPostRequest())
             $filterChain->run();
         else {
-//            throw new CHttpException(400,Yii::t('yii','Your request is invalid.'));
             throw new BadRequestHttpException(Yii::t('yii', 'Your request is invalid.'));
         }
     }
@@ -85,10 +84,9 @@ trait ControllerCompatibility
      */
     public function filterAjaxOnly($filterChain)
     {
-        if(Yii::app()->getRequest()->getIsAjaxRequest())
+        if (Yii::app()->getRequest()->getIsAjaxRequest())
             $filterChain->run();
         else {
-//            throw new CHttpException(400, Yii::t('yii', 'Your request is invalid.'));
             throw new BadRequestHttpException(Yii::t('yii', 'Your request is invalid.'));
         }
     }
@@ -101,7 +99,7 @@ trait ControllerCompatibility
      */
     public function filterAccessControl($filterChain)
     {
-        $filter=new CAccessControlFilter;
+        $filter = new CAccessControlFilter;
 //        $filter->deniedCallback = function (){
 //            if(Yii::$app->user->getIsGuest())
 //                Yii::$app->user->loginRequired();
@@ -109,10 +107,10 @@ trait ControllerCompatibility
 //                throw new CHttpException(403,$filter->resolveErrorMessage($rule));
 //        }
         $accessRules = $this->accessRules();
-        foreach ($accessRules as &$accessRule){
+        foreach ($accessRules as &$accessRule) {
             if (!isset($accessRule['actions']))
                 continue;
-            foreach ($accessRule['actions'] as &$action){
+            foreach ($accessRule['actions'] as &$action) {
                 $action = $this->camel2dashed($action);
             }
         }
@@ -120,14 +118,16 @@ trait ControllerCompatibility
         $filter->filter($filterChain);
     }
 
-    private function camel2dashed($string) {
+    private function camel2dashed($string)
+    {
         return strtolower(preg_replace('/([a-zA-Z])(?=[A-Z])/', '$1-', $string));
     }
 
     /**
      * @return array
      */
-    public function accessRules(){
+    public function accessRules()
+    {
         return [];
     }
 
@@ -146,6 +146,16 @@ trait ControllerCompatibility
      * @return mixed|string
      */
     public function getPageTitle()
+    {
+        return Yii::$app->getView()->title;
+    }
+
+    public function setTitle($title)
+    {
+        Yii::$app->getView()->title = $title;
+    }
+
+    public function getTitle()
     {
         return Yii::$app->getView()->title;
     }
